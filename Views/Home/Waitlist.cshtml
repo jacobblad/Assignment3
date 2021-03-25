@@ -5,30 +5,51 @@
     ViewBag.Title = "Movie List";
 }
 
-@model IEnumerable<Assignment3.Models.ApplicationResponse>
+@model IEnumerable<Assignment3.Models.ApplicationResponse>;
 
 <div>
     <h2>Here is the current movie list</h2>
+    
+        <table class="table table-striped">
+            <thead>
+                <tr class="active">
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Director</th>
+                    <th>Rating</th>
+                    <th>Edited</th>
+                    <th>Lent to</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
 
-    <table>
-        <thead>
-            <tr><th>Category</th><th>Title</th><th>Year</th><th>Director</th><th>Rating</th><th>Edited</th><th>Lent to</th><th>Notes</th></tr>
-        </thead>
 
-        <tbody>
-            @foreach (Assignment3.Models.ApplicationResponse x in Model)
-            {
-            <tr>
-                <td>@x.Category</td>
-                <td>@x.Title</td>
-                <td>@x.Year</td>
-                <td>@x.Director</td>
-                <td>@x.Rating</td>
-                <td>@x.Edited</td>
-                <td>@x.LentTo</td>
-                <td>@x.Notes</td>
-            </tr>
-            }
-        </tbody>
-    </table>
+            <tbody>
+                @foreach (Assignment3.Models.ApplicationResponse x in Model)
+                {
+                <tr>
+
+                    <td>@x.Category</td>
+                    <td>@x.Title</td>
+                    <td>@x.Year</td>
+                    <td>@x.Director</td>
+                    <td>@x.Rating</td>
+                    <td>@x.Edited</td>
+                    <td>@x.LentTo</td>
+                    <td>@x.Notes</td>
+                    <form asp-action="Waitlist" method="post">
+                        <input type="hidden" value="@x.MovieId" name="MovieId" id="MovieId"/>
+                        <td><button class="btn btn-success" type="submit" asp-route-movieid="@x.MovieId">EDIT</button></td>
+                    </form>
+                    <form asp-action="Remove" method="post">
+                        <input type="hidden" value="@x.MovieId" name="MovieId" id="MovieId" />
+                        <td><button class="btn btn-danger" type="submit">DELETE</button></td>
+                    </form>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    
 </div>
